@@ -1,5 +1,4 @@
 import pytest
-
 from unimodality_interval import on_unimod
 
 
@@ -29,5 +28,5 @@ def test_unimod_error_delta():
     with pytest.raises(ValueError) as error:
         on_unimod(x0, a, b, delta, step, max_iterations)
 
-    assert str(error.value) == 'delta must be a positive float.'
+    assert str(error.value) == 'delta must be a float.'
 
