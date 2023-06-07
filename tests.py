@@ -14,7 +14,7 @@ def test_unimod_example_1():
 
     result = on_unimod(x0, a, b, delta, step, max_iterations)
 
-    assert round(result, significant_sign) == 0.5375
+    assert (round(result[0], significant_sign), round(result[1], significant_sign)) == (0.375, 0.7)
 
 
 def test_unimod_error_delta():
