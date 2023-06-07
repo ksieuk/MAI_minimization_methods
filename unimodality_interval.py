@@ -45,7 +45,7 @@ def unimod(x, delta, a, b):
         delta = -delta
     a, b = get_step(x=x, k=0, xp=x, delta=delta)
 
-    return (a + b) / 2
+    return a, b
 
 
 def on_unimod(
@@ -55,7 +55,7 @@ def on_unimod(
         delta: float = 0.001,
         step: float = 0.001,
         max_iterations: int = 25
-) -> float:
+) -> tuple[float]:
     input_data = UnimodInput(
         x0=x0,
         a=a,
@@ -67,10 +67,7 @@ def on_unimod(
 
     result = 0
     for i in range(input_data.max_iterations):
-        try:
-            result = unimod(x=input_data.x0, delta=input_data.delta, a=input_data.a, b=input_data.b)
-        except TypeError as e:
-            print(e)
+        result = unimod(x=input_data.x0, delta=input_data.delta, a=input_data.a, b=input_data.b)
         input_data.delta += input_data.step
     return result
 
