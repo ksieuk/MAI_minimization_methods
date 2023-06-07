@@ -13,8 +13,10 @@ class UnimodInput:
     def __post_init__(self):
         if not isinstance(self.x0, float):
             raise ValueError("x0 must be a float.")
-        if not isinstance(self.delta, float) or self.delta < 0:
-            raise ValueError("delta must be a positive float.")
+        if not isinstance(self.delta, float):
+            raise ValueError("delta must be a float.")
+        if not isinstance(self.max_iterations, int) or self.max_iterations < 1:
+            raise ValueError("max iterations must be a positive integer.")
 
 
 def f(x):
@@ -50,7 +52,7 @@ def on_unimod(
         x0: float = 0.0,
         a: int = 0,
         b: int = 2,
-        delta: float = '0.001',
+        delta: float = 0.001,
         step: float = 0.001,
         max_iterations: int = 25
 ) -> float:
@@ -74,7 +76,15 @@ def on_unimod(
 
 
 def main():
-    on_unimod()
+    x0: float = float(input('Начальное значение: '))
+    a: int = int(input('Граница a: '))
+    b: int = int(input('Граница b: '))
+    delta: float = float(input('Delta: '))
+    step_delta: float = float(input('Шаг для Delta: '))
+    max_iterations: int = int(input('Максимальное количество итераций: '))
+    res = on_unimod(x0, a, b, delta, step_delta, max_iterations)
+    print(res)
+    # print(on_unimod())
 
 
 if __name__ == '__main__':
