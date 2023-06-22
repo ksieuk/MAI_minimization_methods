@@ -27,6 +27,7 @@ def main():
     k = 0
     x1, x2 = -0.6, -0.6
     F = f_x(x1, x2)
+
     print(f"k = 0, x1 = {x1}, x2 = {x2}, f(x) = {F}, t = {t}, grad = 1:{f_xx1(x1, x2)} 2:{f_xx2(x1, x2)}")
 
     while k <= N:
@@ -58,7 +59,7 @@ def main():
         k += 1
 
         print(
-            f"k = {k}, x1 = {x1}, x2 = {x2}, f(x) = {f_x(x1, x2)}, t = {t}, grad = 1:{f_xx1(x1, x2)} 2:{f_xx2(x1, x2)}")
+            f"k = {k}, x1 = {x1}, x2 = {x2}, f(x) = {f_x(x1, x2)}, t = {t}, grad = 1:{f_xx1(x1, x2)} 2:{f_xx2(x1, x2)}\n")
 
         if abs(f_xx2(x1, x2)) <= E1 and abs(f_xx1(x1, x2)) <= E1:
             break
