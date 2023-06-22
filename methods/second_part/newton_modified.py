@@ -41,10 +41,8 @@ def modified_newton_method(f, grad_f, hessian_f, x0, max_iter=100, epsilon=1e-6)
     return x, trajectory
 
 
-def main():
-    # Начальные точки
-    x0 = [0, 0]
-
+def start_algorithm(x1, x2):
+    x0 = [x1, x2]
     # Применяем модифицированный метод Ньютона
     solution, trajectory = modified_newton_method(f2, gradient_f2, hessian_f2, x0)
 
@@ -67,6 +65,21 @@ def main():
     ax.set_zlabel('f2(X1, X2)')
     ax.set_title('График функции f2(X1, X2)')
     plt.show()
+
+
+def start_input():
+    x1 = float(input('Введите первую точку x1: '))
+    x2 = float(input('Введите вторую точку x2: '))
+
+    start_algorithm(x1, x2)
+
+
+def main():
+    # Начальные точки
+    x1, x2 = 0, 0
+
+    start_algorithm(x1, x2)
+
 
 
 if __name__ == '__main__':

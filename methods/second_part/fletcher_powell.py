@@ -50,12 +50,10 @@ def line_search(x, p):
     return alpha
 
 
-def main():
-    # Начальные точки
-    x0 = [0, 0]
-
+def start_algorithm(x1, x2):
     # Запуск метода Дэвидона-Флетчера-Пауэлла
-    x_history, f_history = davidon_fletcher_powell(x0)
+    x_values = [x1, x2]
+    x_history, f_history = davidon_fletcher_powell(x_values)
 
     # Вывод результатов
     print("Точки:")
@@ -81,6 +79,20 @@ def main():
     plt.title('График функции f2(x)')
     plt.grid(True)
     plt.show()
+
+
+def start_input():
+    x1 = float(input('Введите первую точку x1: '))
+    x2 = float(input('Введите вторую точку x2: '))
+
+    start_algorithm(x1, x2)
+
+
+def main():
+    # Начальные точки
+    x1, x2 = 0, 0
+
+    start_algorithm(x1, x2)
 
 
 if __name__ == '__main__':

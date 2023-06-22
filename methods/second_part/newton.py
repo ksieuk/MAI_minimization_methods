@@ -36,9 +36,8 @@ def newton_method(start_point, gradient, hessian, max_iterations=100, tolerance=
     return x, trajectory
 
 
-def main():
-    # Задаем начальные точки
-    start_points = [[-1, -1], [2, 2]]
+def start_algorithm(x1, x2, y1, y2):
+    start_points = [[x1, x2], [y1, y2]]
 
     # Применяем метод Ньютона для каждой начальной точки
     for start_point in start_points:
@@ -58,6 +57,22 @@ def main():
         plt.ylabel('x2')
         plt.title('Метод Ньютона для функции f2(x)')
         plt.show()
+
+
+def start_input():
+    x1 = float(input('Введите первую точку x1: '))
+    x2 = float(input('Введите вторую точку x2: '))
+    y1 = float(input('Введите первую точку y1: '))
+    y2 = float(input('Введите вторую точку y2: '))
+
+    start_algorithm(x1, x2, y1, y2)
+
+
+def main():
+    # Задаем начальные точки
+    x1, x2, y1, y2 = -1, -1, 2, 2
+
+    start_algorithm(x1, x2, y1, y2)
 
 
 if __name__ == '__main__':

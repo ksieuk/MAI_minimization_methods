@@ -37,9 +37,9 @@ def fletcher_reeves(x0, tol=1e-6, max_iter=100):
     return x, points
 
 
-def main():
+def start_algorithm(x1, x2):
     # Начальные точки
-    x0 = np.array([-1.5, 1.5])
+    x0 = np.array([x1, x2])
 
     # Применяем метод Флетчера-Ривса
     solution, points = fletcher_reeves(x0)
@@ -62,6 +62,17 @@ def main():
     plt.title('Метод Флетчера-Ривса для функции f2(x)')
     plt.grid(True)
     plt.show()
+
+
+def start_input():
+    x1 = float(input('Введите первую точку x1: '))
+    x2 = float(input('Введите вторую точку x2: '))
+
+    start_algorithm(x1, x2)
+
+
+def main():
+    start_algorithm(-1.5, 1.5)
 
 
 if __name__ == '__main__':

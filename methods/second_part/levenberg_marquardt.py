@@ -13,7 +13,7 @@ def gradient_f2(x):
     return grad
 
 
-def marquardt_method(x0, f, gradient_f, tau=1e-4, epsilon=1e-6, max_iterations=100):
+def marquardt_method(x0, f, gradient_f, epsilon=1e-6, max_iterations=100):
     x = x0.copy()
     lambd = 0.01  # Initial damping factor
     iteration = 0
@@ -40,8 +40,7 @@ def marquardt_method(x0, f, gradient_f, tau=1e-4, epsilon=1e-6, max_iterations=1
     return x
 
 
-def main():
-    # Начальные точки
+def start_algorithm(x1, x2):
     x0 = np.array([0.5, 0.5])
 
     # Выполняем метод Марквардта
@@ -66,6 +65,20 @@ def main():
     ax.set_zlabel('f(x)')
     plt.title('График функции')
     plt.show()
+
+
+def start_input():
+    x1 = float(input('Введите первую точку x1: '))
+    x2 = float(input('Введите вторую точку x2: '))
+
+    start_algorithm(x1, x2)
+
+
+def main():
+    # Начальные точки
+    x1, x2 = 0.5, 0.5
+
+    start_algorithm(x1, x2)
 
 
 if __name__ == '__main__':
