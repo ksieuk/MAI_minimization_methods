@@ -57,11 +57,9 @@ def start_algorithm(x1, x2):
 
     # Вывод результатов
     print("Точки:")
-    for x in x_history:
-        print(x)
+    print('; '.join(map(str, x_history)))
     print("\nЗначения функции:")
-    for f in f_history:
-        print(f)
+    print('; '.join(map(str, f_history)))
 
     # Построение графика функции
     x1_range = np.linspace(-2, 2, 100)
