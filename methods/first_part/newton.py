@@ -81,10 +81,8 @@ algorithm_funcs = {
 }
 
 
-def start_algorithm(a, b, f_num, algorithm_type, epsilon, max_iterations):
+def start_algorithm(a, b, f_num, algorithm_type, epsilon, max_iterations, x0=None):
     if algorithm_type == '1':
-        x0 = float(input("Введите начальное приближение x0: "))
-        print(x0, a, b, epsilon, max_iterations, f_num)
         minimum = algorithm_funcs[algorithm_type](x0, a, b, epsilon, max_iterations, f_num)
     else:
         minimum = algorithm_funcs[algorithm_type](a, b, epsilon, max_iterations, f_num)
@@ -104,12 +102,17 @@ def start_input():
     if f_num not in ("1", "2"):
         raise ValueError('Такого номера функции не существует')
 
+    if algorithm_number == '1':
+        x0 = float(input("Введите начальное приближение x0: "))
+    else:
+        x0 = None
+
     a = float(input("Введите начало интервала a: "))
     b = float(input("Введите конец интервала b: "))
     epsilon = float(input("Введите величину погрешности epsilon: "))
     max_iterations = int(input("Введите максимальное количество итераций: "))
 
-    start_algorithm(a, b, f_num, algorithm_number, epsilon, max_iterations)
+    start_algorithm(a, b, f_num, algorithm_number, epsilon, max_iterations, x0=x0)
 
 
 def main():

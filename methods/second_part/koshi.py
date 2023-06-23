@@ -70,11 +70,11 @@ def start_algorithm(max_iterations, epsilon, t, x1, x2):
 
 
 def start_input():
+    t = float(input('Введите значение t (первое приближение): '))
     x1 = float(input('Введите первую точку x1: '))
     x2 = float(input('Введите вторую точку x2: '))
     max_iterations = int(input('Введите максимальное количество итераций: '))
     epsilon = float(input('Введите значение эпсилон: '))
-    t = float(input('Введите значение t (первое приближение): '))
 
     start_algorithm(max_iterations, epsilon, t, x1, x2)
 
