@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>705</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>300</width>
+    <height>500</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>shtosh calculator</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>:/icons/icons/calculator.svg</normaloff>:/icons/icons/calculator.svg</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget {
+                color: white;
+                background-color: #121212;
+                font-family: Rubik;
+                font-size: 16pt;
+                font-weight: 600;
+                }
+
+                QPushButton {
+                background-color: transparent;
+                border: none;
+                }
+
+                QPushButton:hover {
+                background-color: #666;
+                }
+
+                QPushButton:pressed {
+                background-color: #888;
+                }
+            </string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,1,1">
+    <item>
+     <widget class="QListWidget" name="list_methods">
+      <property name="font">
+       <font>
+        <family>Ubuntu</family>
+        <pointsize>11</pointsize>
+        <weight>3</weight>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 25 11pt &quot;Ubuntu&quot;;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QListWidget" name="list_input">
+      <property name="styleSheet">
+       <string notr="true">font: 12pt &quot;Ubuntu Mono&quot;;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="layout_output">
+      <item>
+       <widget class="QLineEdit" name="le_entry">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font-size: 40pt;
+                                border: none;
+                            </string>
+        </property>
+        <property name="text">
+         <string>0</string>
+        </property>
+        <property name="maxLength">
+         <number>16</number>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="img_grafic">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="lbl_temp">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #888;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources>
+  <include location="files.qrc"/>
+ </resources>
+ <connections/>
+</ui>
