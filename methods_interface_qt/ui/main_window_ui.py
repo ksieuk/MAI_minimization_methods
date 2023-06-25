@@ -93,8 +93,8 @@ class Ui_MainWindow(object):
         self.verticalLayout.setObjectName("verticalLayout")
         self.list_methods = QtWidgets.QListWidget(self.centralwidget)
         font = QtGui.QFont()
-        font.setFamily("Fira Sans,sans-serif")
-        font.setPointSize(1)
+        font.setFamily("Fira Sans")
+        font.setPointSize(-1)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(50)
@@ -184,18 +184,6 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.pb_calculate)
         self.layout_output = QtWidgets.QHBoxLayout()
         self.layout_output.setObjectName("layout_output")
-        self.img_grafic = QtWidgets.QLabel(self.centralwidget)
-        self.img_grafic.setStyleSheet("QLabel{\n"
-"    text-align: center;\n"
-"    color: white;\n"
-"    background-color:rgb(0,149,218);\n"
-"    border: 1px solid rgb(0, 0, 0);\n"
-"    border-radius: 10px;\n"
-"    font: 24px \"Fira Sans\", sans-serif, center;\n"
-"}\n"
-"")
-        self.img_grafic.setObjectName("img_grafic")
-        self.layout_output.addWidget(self.img_grafic)
         self.text_entry = QtWidgets.QTextBrowser(self.centralwidget)
         self.text_entry.setStyleSheet("QTextBrowser{\n"
 "    text-align: center;\n"
@@ -233,9 +221,8 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Методы оптимизации"))
         self.pb_calculate.setText(_translate("MainWindow", "Выполнить"))
-        self.img_grafic.setText(_translate("MainWindow", "Результат"))
         self.text_entry.setHtml(_translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'Fira Sans,sans-serif\'; font-size:22px; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:36px;\"><br /></p></body></html>"))
+"</style></head><body style=\" font-family:\'Fira Sans\',\'sans-serif\'; font-size:22px; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'Fira Sans,sans-serif\'; font-size:36px;\"><br /></p></body></html>"))

@@ -28,6 +28,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.method_selected_model, self.method_selected = None, None
         self.text_entry.setText('Здесь будет результат работы программы')
         # self.create_fields_input(list(MinimizationModel.__fields__.keys()))
+        self.graphWidget = None
 
     def create_fields_input(self, titles: list, values_names: list):
         self.list_input.clear()
@@ -46,6 +47,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.list_methods.itemDoubleClicked.connect(self.select_method)
 
     def select_method(self, item: QListWidgetItem) -> None:
+        self.delete_graph()
+        self.text_entry.setText('Здесь будет результат работы программы')
+
         method_title = item.text()
         self.method_selected_model, self.method_selected = METHODS[method_title]
         model_schema = json.loads(self.method_selected_model.schema_json())
@@ -69,10 +73,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def on_calculate(self):
         try:
             result = self.method_selected(*self.get_input_text())
+            if isinstance(result, tuple):
+                result, graph = result
+                self.layout_output.addWidget(graph)
+                self.delete_graph()
+                self.graphWidget = graph
+
         except ValueError as e:
             print(e)
             result = str(e)
         self.text_entry.setText(result)
+
+    def delete_graph(self):
+        if not self.graphWidget:
+            return
+        self.layout_output.removeWidget(self.graphWidget)
+        self.graphWidget.deleteLater()
+        self.graphWidget = None
 
 
 class MyWidget(QWidget):
@@ -84,12 +101,10 @@ class MyWidget(QWidget):
         self.label.setToolTip(value_name)
         self.label.setObjectName(f"label_input_{field_number}")
         self.label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
-        # self.label.setStyleSheet("background-color: #0F628B;")
         size_policy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         self.label.setSizePolicy(size_policy)
 
         self.lineEdit = QLineEdit()
-        # self.lineEdit.setStyleSheet("background-color: #FFFFFF;")
         self.lineEdit.setObjectName(f"le_input_{field_number}")
         self.lineEdit.setSizePolicy(size_policy)
 

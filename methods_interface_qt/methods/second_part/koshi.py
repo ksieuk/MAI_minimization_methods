@@ -68,7 +68,6 @@ def start_algorithm(max_iterations, epsilon, t, x1, x2):
     return f"k = {k}, t = {t}, x1 = {x1}, x2 = {x2}, f(x) = {f_x(x1, x2)}, t = {t}," \
            f" grad = 1:{f_xx1(x1, x2)} 2:{f_xx2(x1, x2)}"
 
-
 def start_input():
     t = float(input('Введите значение t (первое приближение): '))
     x1 = float(input('Введите первую точку x1: '))

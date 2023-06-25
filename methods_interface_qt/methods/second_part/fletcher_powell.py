@@ -1,5 +1,11 @@
 import numpy as np
-import matplotlib.pyplot as plt
+import matplotlib
+
+from PyQt6 import QtCore
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
+from matplotlib.figure import Figure
+
+matplotlib.use('QtAgg')
 
 
 def f2(x):
@@ -50,44 +56,52 @@ def line_search(x, p):
     return alpha
 
 
+class MplCanvas(FigureCanvasQTAgg):
+
+    def __init__(self, x_history, width=5, height=4, dpi=100):
+        plt_ = Figure(figsize=(width, height), dpi=dpi)
+
+        self.axes = plt_.add_subplot(111)
+        x1_range = np.linspace(-2, 2, 100)
+        x2_range = np.linspace(-1, 3, 100)
+        x1, x2 = np.meshgrid(x1_range, x2_range)
+        z = f2([x1, x2])
+        self.axes.contour(x1, x2, z, levels=20, colors='gray')  # Контуры функции
+        self.axes.plot(*zip(*x_history), 'ro-')  # Траектория поиска
+        self.axes.plot(*x_history[0], 'go')  # Начальная точка
+        self.axes.plot(*x_history[-1], 'bo')  # Конечная точка
+        self.axes.set_xlabel('x1')
+        self.axes.set_ylabel('x2')
+        self.axes.set_title('График функции')
+        self.axes.grid(True)
+        super(MplCanvas, self).__init__(plt_)
+
+
 def start_algorithm(x1, x2):
     # Запуск метода Дэвидона-Флетчера-Пауэлла
     x_values = [x1, x2]
     x_history, f_history = davidon_fletcher_powell(x_values)
 
     # Построение графика функции
-    x1_range = np.linspace(-2, 2, 100)
-    x2_range = np.linspace(-1, 3, 100)
-    x1, x2 = np.meshgrid(x1_range, x2_range)
-    z = f2([x1, x2])
-
-    plt.figure(figsize=(8, 6))
-    plt.contour(x1, x2, z, levels=20, colors='gray')  # Контуры функции
-    plt.plot(*zip(*x_history), 'ro-')  # Траектория поиска
-    plt.plot(*x_history[0], 'go')  # Начальная точка
-    plt.plot(*x_history[-1], 'bo')  # Конечная точка
-    plt.xlabel('x1')
-    plt.ylabel('x2')
-    plt.title('График функции f2(x)')
-    plt.grid(True)
-    plt.show()
+    graph = MplCanvas(x_history, width=5, height=4, dpi=100)
 
     # Вывод результатов
-    return f"Точки:\n{'; '.join(map(str, x_history))}\nЗначения функции:\n{'; '.join(map(str, f_history))}"
+    return f"Точки:\n{'; '.join(map(str, x_history))}\nЗначения функции:\n{'; '.join(map(str, f_history))}",\
+        graph
 
 
 def start_input():
     x1 = float(input('Введите первую точку x1: '))
     x2 = float(input('Введите вторую точку x2: '))
 
-    start_algorithm(x1, x2)
+    print(start_algorithm(x1, x2))
 
 
 def main():
     # Начальные точки
     x1, x2 = 0, 0
 
-    start_algorithm(x1, x2)
+    print(start_algorithm(x1, x2))
 
 
 if __name__ == '__main__':

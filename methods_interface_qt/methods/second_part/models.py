@@ -27,8 +27,6 @@ class LevenbergMarquardtModel(BaseModel):
 class NewtonModel(BaseModel):
     x1: float = Field(..., description='Введите первую точку x1')
     x2: float = Field(..., description='Введите вторую точку x2')
-    y1: float = Field(..., description='Введите первую точку y1')
-    y2: float = Field(..., description='Введите вторую точку y2')
 
 
 class NewtonModifiedModel(BaseModel):

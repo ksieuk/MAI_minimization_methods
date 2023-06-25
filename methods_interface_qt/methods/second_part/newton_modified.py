@@ -1,5 +1,12 @@
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
+
+from PyQt6 import QtCore
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
+from matplotlib.figure import Figure
+
+matplotlib.use('QtAgg')
 
 
 def f2(x):
@@ -41,6 +48,26 @@ def modified_newton_method(f, grad_f, hessian_f, x0, max_iter=100, epsilon=1e-6)
     return x, trajectory
 
 
+class MplCanvas(FigureCanvasQTAgg):
+
+    def __init__(self, width=5, height=4, dpi=100):
+        plt_ = Figure(figsize=(width, height), dpi=dpi)
+
+        self.axes = plt_.add_subplot(111, projection='3d')
+
+        x1_values = np.linspace(-2, 2, 100)
+        x2_values = np.linspace(-1, 3, 100)
+        x1, x2 = np.meshgrid(x1_values, x2_values)
+        z = f2([x1, x2])
+
+        self.axes.plot_surface(x1, x2, z, cmap='viridis')
+        self.axes.set_xlabel('X1')
+        self.axes.set_ylabel('X2')
+        self.axes.set_zlabel('f2(X1, X2)')
+        self.axes.set_title('График функции f2(X1, X2)')
+        super(MplCanvas, self).__init__(plt_)
+
+
 def start_algorithm(x1, x2):
     x0 = [x1, x2]
     # Применяем модифицированный метод Ньютона
@@ -50,23 +77,11 @@ def start_algorithm(x1, x2):
     print("Найденная точка: ", solution)
     print("Траектория поиска: ", trajectory)
 
-    # Создаем сетку точек для построения графика
-    x1_values = np.linspace(-2, 2, 100)
-    x2_values = np.linspace(-1, 3, 100)
-    x1, x2 = np.meshgrid(x1_values, x2_values)
-    z = f2([x1, x2])
-
     # Построение графика функции
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
-    ax.plot_surface(x1, x2, z, cmap='viridis')
-    ax.set_xlabel('X1')
-    ax.set_ylabel('X2')
-    ax.set_zlabel('f2(X1, X2)')
-    ax.set_title('График функции f2(X1, X2)')
-    plt.show()
+    graph = MplCanvas(width=5, height=4, dpi=100)
 
-    return f"Найденная точка: {solution}\nТраектория поиска: {trajectory}"
+    return f"Найденная точка: {solution}\nТраектория поиска: {trajectory}", graph
+
 
 
 def start_input():
@@ -81,7 +96,6 @@ def main():
     x1, x2 = 0, 0
 
     start_algorithm(x1, x2)
-
 
 
 if __name__ == '__main__':

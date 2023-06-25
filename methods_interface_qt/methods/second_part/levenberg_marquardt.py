@@ -1,5 +1,13 @@
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
+
+
+from PyQt6 import QtCore
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
+from matplotlib.figure import Figure
+
+matplotlib.use('QtAgg')
 
 
 def f2(x):
@@ -40,6 +48,28 @@ def marquardt_method(x0, f, gradient_f, epsilon=1e-6, max_iterations=100):
     return x
 
 
+class MplCanvas(FigureCanvasQTAgg):
+
+    def __init__(self, width=5, height=4, dpi=100):
+        plt_ = Figure(figsize=(width, height), dpi=dpi)
+
+        self.axes = plt_.add_subplot(111, projection='3d')
+
+        x1_vals = np.linspace(-2, 2, 100)
+        x2_vals = np.linspace(-2, 2, 100)
+        x1_mesh, x2_mesh = np.meshgrid(x1_vals, x2_vals)
+        f_vals = f2([x1_mesh, x2_mesh])
+
+        self.axes.plot_surface(x1_mesh, x2_mesh, f_vals, cmap='viridis')
+        self.axes.set_xlabel('x1')
+        self.axes.set_ylabel('x2')
+        self.axes.set_zlabel('f(x)')
+        self.axes.set_title('График функции')
+
+        super(MplCanvas, self).__init__(plt_)
+
+
+
 def start_algorithm(x1, x2):
     x0 = np.array([x1, x2])
 
@@ -47,21 +77,9 @@ def start_algorithm(x1, x2):
     result = marquardt_method(x0, f2, gradient_f2)
 
     # Создаем график функции
-    x1_vals = np.linspace(-2, 2, 100)
-    x2_vals = np.linspace(-2, 2, 100)
-    x1_mesh, x2_mesh = np.meshgrid(x1_vals, x2_vals)
-    f_vals = f2([x1_mesh, x2_mesh])
+    graph = MplCanvas(width=5, height=4, dpi=100)
 
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
-    ax.plot_surface(x1_mesh, x2_mesh, f_vals, cmap='viridis')
-    ax.set_xlabel('x1')
-    ax.set_ylabel('x2')
-    ax.set_zlabel('f(x)')
-    plt.title('График функции')
-    plt.show()
-
-    return f"Найденные точки:\nx1 = {result[0]}\nx2 = {result[1]}"
+    return f"Найденные точки:\nx1 = {result[0]}\nx2 = {result[1]}", graph
 
 
 def start_input():

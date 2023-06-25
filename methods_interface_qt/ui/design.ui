@@ -103,7 +103,7 @@ QScrollBar::ad-page:vertical, QScrollBar::sub-page:vertical, QScrollBar::add-pag
      <widget class="QListWidget" name="list_methods">
       <property name="font">
        <font>
-        <family>Fira Sans,sans-serif</family>
+        <family>Fira Sans</family>
         <pointsize>-1</pointsize>
         <weight>50</weight>
         <italic>false</italic>
@@ -213,24 +213,6 @@ QPushButton:hover {
     <item>
      <layout class="QHBoxLayout" name="layout_output">
       <item>
-       <widget class="QLabel" name="img_grafic">
-        <property name="styleSheet">
-         <string notr="true">QLabel{
-	text-align: center;
-	color: white;
-	background-color:rgb(0,149,218);
-	border: 1px solid rgb(0, 0, 0);
-	border-radius: 10px;
-	font: 24px &quot;Fira Sans&quot;, sans-serif, center;
-}
-</string>
-        </property>
-        <property name="text">
-         <string>Результат</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QTextBrowser" name="text_entry">
         <property name="styleSheet">
          <string notr="true">QTextBrowser{
@@ -250,8 +232,8 @@ QPushButton:hover {
          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Fira Sans,sans-serif'; font-size:22px; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:36px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Fira Sans','sans-serif'; font-size:22px; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Fira Sans,sans-serif'; font-size:36px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="textInteractionFlags">
          <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
