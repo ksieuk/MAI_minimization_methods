@@ -44,10 +44,6 @@ def start_algorithm(x1, x2):
     # Применяем метод Флетчера-Ривса
     solution, points = fletcher_reeves(x0)
 
-    # Выводим результат
-    print("Найденное решение:")
-    print(solution)
-
     # Строим график функции
     x_range = np.linspace(-3, 3, 100)
     y_range = np.linspace(-3, 3, 100)
@@ -62,6 +58,9 @@ def start_algorithm(x1, x2):
     plt.title('Метод Флетчера-Ривса для функции f2(x)')
     plt.grid(True)
     plt.show()
+
+    # Выводим результат
+    return f"Найденное решение: {solution}"
 
 
 def start_input():

@@ -65,8 +65,8 @@ def start_algorithm(max_iterations, epsilon, t, x1, x2):
     if k_method == (max_iterations * 10):
         raise RuntimeError(f'Превышено количество итераций ({max_iterations}) внутри метода')
 
-    print(
-        f"k = {k}, t = {t}, x1 = {x1}, x2 = {x2}, f(x) = {f_x(x1, x2)}, t = {t}, grad = 1:{f_xx1(x1, x2)} 2:{f_xx2(x1, x2)} fin")
+    return f"k = {k}, t = {t}, x1 = {x1}, x2 = {x2}, f(x) = {f_x(x1, x2)}, t = {t}," \
+           f" grad = 1:{f_xx1(x1, x2)} 2:{f_xx2(x1, x2)}"
 
 
 def start_input():

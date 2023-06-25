@@ -41,15 +41,10 @@ def marquardt_method(x0, f, gradient_f, epsilon=1e-6, max_iterations=100):
 
 
 def start_algorithm(x1, x2):
-    x0 = np.array([0.5, 0.5])
+    x0 = np.array([x1, x2])
 
     # Выполняем метод Марквардта
     result = marquardt_method(x0, f2, gradient_f2)
-
-    # Выводим результаты
-    print("Найденные точки:")
-    print("x1 =", result[0])
-    print("x2 =", result[1])
 
     # Создаем график функции
     x1_vals = np.linspace(-2, 2, 100)
@@ -65,6 +60,8 @@ def start_algorithm(x1, x2):
     ax.set_zlabel('f(x)')
     plt.title('График функции')
     plt.show()
+
+    return f"Найденные точки:\nx1 = {result[0]}\nx2 = {result[1]}"
 
 
 def start_input():

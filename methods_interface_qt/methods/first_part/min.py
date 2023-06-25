@@ -12,8 +12,7 @@ def f(x, f_num):
 def uniform_search(a, b, epsilon, f_num, n):
     step = (b - a) / n
     if step < epsilon:
-        print("Количество шагов слишком велико для заданной точности")
-        return None
+        raise ValueError("Количество шагов слишком велико для заданной точности")
     min_func = f(a, f_num)
     min_arg = a
 
@@ -80,8 +79,20 @@ algorithm_funcs = {
 def start_algorithm(a, b, epsilon, algorithm_type, f_num, n):
     minimum, iteration_number = algorithm_funcs[algorithm_type](a, b, epsilon, f_num, n)
 
-    print(f"Минимум функции на заданном интервале находится в точке x = {minimum},"
-          f" количество итераций = {iteration_number}")
+    return f"Минимум функции на заданном интервале находится в точке x = {minimum}," \
+           f" количество итераций = {iteration_number}"
+
+
+def start_first(a, b, epsilon, f_num, n):
+    return start_algorithm(a, b, epsilon, algorithm_type='1', f_num=f_num, n=n)
+
+
+def start_second(a, b, epsilon, f_num, n):
+    return start_algorithm(a, b, epsilon, algorithm_type='2', f_num=f_num, n=n)
+
+
+def start_third(a, b, epsilon, f_num, n):
+    return start_algorithm(a, b, epsilon, algorithm_type='3', f_num=f_num, n=n)
 
 
 def start_input():

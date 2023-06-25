@@ -40,6 +40,8 @@ def start_algorithm(x1, x2, y1, y2):
     start_points = [[x1, x2], [y1, y2]]
 
     # Применяем метод Ньютона для каждой начальной точки
+    start_point = x_optimal = 0
+
     for start_point in start_points:
         x_optimal, trajectory = newton_method(start_point, gradient_f2, hessian_f2)
         print("Начальная точка:", start_point)
@@ -57,6 +59,8 @@ def start_algorithm(x1, x2, y1, y2):
         plt.ylabel('x2')
         plt.title('Метод Ньютона для функции f2(x)')
         plt.show()
+
+    return f"Начальная точка: {start_point}\nОптимальная точка: {x_optimal}"
 
 
 def start_input():

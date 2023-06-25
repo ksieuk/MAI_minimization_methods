@@ -75,8 +75,20 @@ def start_algorithm(x0, a, b, delta, ran, f_num, algorithm_type):
         result = unimod(x0, delta, a, b, f_num, algorithm_type)
         delta += 0.001
         print(i + 1, end=': ')
-    print(
-        f"Интервал унимодальности находится в точке {result:.6f}, значение функции в этой точке {f(result, f_num):.6f}")
+    return f"Интервал унимодальности находится в точке {result:.6f}, " \
+           f"значение функции в этой точке {f(result, f_num):.6f}"
+
+
+def start_first(x0, a, b, delta, f_num, ran):
+    return start_algorithm(x0, a, b, delta, ran, f_num, algorithm_type='1')
+
+
+def start_second(x0, a, b, delta, f_num, ran):
+    return start_algorithm(x0, a, b, delta, ran, f_num, algorithm_type='2')
+
+
+def start_third(x0, a, b, delta, f_num, ran):
+    return start_algorithm(x0, a, b, delta, ran, f_num, algorithm_type='3')
 
 
 def start_input():

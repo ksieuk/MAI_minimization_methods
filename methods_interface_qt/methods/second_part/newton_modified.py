@@ -66,6 +66,8 @@ def start_algorithm(x1, x2):
     ax.set_title('График функции f2(X1, X2)')
     plt.show()
 
+    return f"Найденная точка: {solution}\nТраектория поиска: {trajectory}"
+
 
 def start_input():
     x1 = float(input('Введите первую точку x1: '))

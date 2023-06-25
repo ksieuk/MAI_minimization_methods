@@ -55,12 +55,6 @@ def start_algorithm(x1, x2):
     x_values = [x1, x2]
     x_history, f_history = davidon_fletcher_powell(x_values)
 
-    # Вывод результатов
-    print("Точки:")
-    print('; '.join(map(str, x_history)))
-    print("\nЗначения функции:")
-    print('; '.join(map(str, f_history)))
-
     # Построение графика функции
     x1_range = np.linspace(-2, 2, 100)
     x2_range = np.linspace(-1, 3, 100)
@@ -77,6 +71,9 @@ def start_algorithm(x1, x2):
     plt.title('График функции f2(x)')
     plt.grid(True)
     plt.show()
+
+    # Вывод результатов
+    return f"Точки:\n{'; '.join(map(str, x_history))}\nЗначения функции:\n{'; '.join(map(str, f_history))}"
 
 
 def start_input():

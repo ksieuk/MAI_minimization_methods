@@ -58,7 +58,7 @@ def secant_method(a, b, epsilon, max_iterations, f_num):
             return x1
         try:
             x0, x1 = x1, x1 - derivative(x1, f_num, h=1e-7) * (
-                        (x1 - x0) / (derivative(x1, f_num, h=1e-7) - derivative(x0, f_num, h=1e-7)))
+                    (x1 - x0) / (derivative(x1, f_num, h=1e-7) - derivative(x0, f_num, h=1e-7)))
             array.append(x1)
         except ZeroDivisionError:
             break
@@ -82,12 +82,25 @@ algorithm_funcs = {
 
 
 def start_algorithm(a, b, f_num, algorithm_type, epsilon, max_iterations, x0=None):
+    print(a, b, epsilon, max_iterations, f_num)
     if algorithm_type == '1':
         minimum = algorithm_funcs[algorithm_type](x0, a, b, epsilon, max_iterations, f_num)
     else:
         minimum = algorithm_funcs[algorithm_type](a, b, epsilon, max_iterations, f_num)
 
-    print(f"Минимум функции на заданном интервале находится в точке x = {minimum}")
+    return f"Минимум функции на заданном интервале находится в точке x = {minimum}"
+
+
+def start_first(x0, a, b, epsilon, f_num, max_iterations):
+    return start_algorithm(a, b, f_num, algorithm_type='1', epsilon=epsilon, max_iterations=max_iterations, x0=x0)
+
+
+def start_second(x0, a, b, epsilon, f_num, max_iterations):
+    return start_algorithm(a, b, f_num, algorithm_type='2', epsilon=epsilon, max_iterations=max_iterations, x0=x0)
+
+
+def start_third(x0, a, b, epsilon, f_num, max_iterations):
+    return start_algorithm(a, b, f_num, algorithm_type='3', epsilon=epsilon, max_iterations=max_iterations, x0=x0)
 
 
 def start_input():
