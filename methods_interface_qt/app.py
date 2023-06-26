@@ -16,6 +16,7 @@ from PyQt6.QtCore import Qt
 
 from ui.main_window_ui import Ui_MainWindow
 from config import METHODS
+from pydantic.error_wrappers import ValidationError
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -70,6 +71,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             raise ValueError("Ошибка: Ни одного параметра не введено")
         return values_validated.dict().values()
 
+    @classmethod
+    def __get_error_message(cls, errors: list):
+        error_messages = []
+        for error in errors:
+            error_messages.append(f"{error.get('msg')}: {', '.join(error.get('loc'))}")
+        return "\n".join(error_messages)
+
     def on_calculate(self):
         try:
             result = self.method_selected(*self.get_input_text())
@@ -79,6 +87,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.delete_graph()
                 self.graphWidget = graph
 
+        except ValidationError as e:
+            result = self.__get_error_message(e.errors())
         except ValueError as e:
             result = str(e)
         except RecursionError:
