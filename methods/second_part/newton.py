@@ -2,38 +2,36 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def f2(x):
-    x1, x2 = x
+def f2(x1, x2):
     return 0.5 * (x2 - x1 ** 2) ** 2 + (1 - x1) ** 2
 
 
-def gradient_f2(x):
-    x1, x2 = x
+def gradient_f2(x1, x2):
     df_dx1 = -2 * (x2 - x1 ** 2) * (2 * x1) - 2 * (1 - x1)
     df_dx2 = 2 * (x2 - x1 ** 2)
     return np.array([df_dx1, df_dx2])
 
 
-def hessian_f2(x):
-    x1, x2 = x
+def hessian_f2(x1, x2):
     d2f_dx1dx1 = 2 * (2 * x1 ** 2) - 2 * (x2 - x1 ** 2) * 2 + 2
     d2f_dx1dx2 = -2 * x1
     d2f_dx2dx2 = 2
     return np.array([[d2f_dx1dx1, d2f_dx1dx2], [d2f_dx1dx2, d2f_dx2dx2]])
 
 
-def newton_method(start_point, gradient, hessian, max_iterations=100, tolerance=1e-6):
-    x = np.array(start_point, dtype=float)  # Изменение типа данных на float
-    trajectory = [x]
+def newton_method(x1, x2, gradient, hessian, max_iterations=100, tolerance=1e-6):
+    # x = np.array(start_point, dtype=float)  # Изменение типа данных на float
+    trajectory = [(x1, x2)]
     for _ in range(max_iterations):
-        grad = gradient(x)
-        hess = hessian(x)
+        grad = gradient(x1, x2)
+        hess = hessian(x1, x2)
         direction = np.linalg.solve(hess, -grad)
-        x += direction
-        trajectory.append(x)
+        x1 += direction
+        x2 += direction
+        trajectory.append((x1, x2))
         if np.linalg.norm(grad) < tolerance:
             break
-    return x, trajectory
+    return (x1, x2), trajectory
 
 
 def start_algorithm(x1, x2, y1, y2):
@@ -41,7 +39,7 @@ def start_algorithm(x1, x2, y1, y2):
 
     # Применяем метод Ньютона для каждой начальной точки
     for start_point in start_points:
-        x_optimal, trajectory = newton_method(start_point, gradient_f2, hessian_f2)
+        x_optimal, trajectory = newton_method(start_point[0], start_point[1], gradient_f2, hessian_f2)
         print("Начальная точка:", start_point)
         print("Оптимальная точка:", x_optimal)
         print()
@@ -50,7 +48,7 @@ def start_algorithm(x1, x2, y1, y2):
         x1_vals = np.linspace(-3, 3, 100)
         x2_vals = np.linspace(-3, 3, 100)
         x1, x2 = np.meshgrid(x1_vals, x2_vals)
-        z = f2([x1, x2])
+        z = f2(x1, x2)
         plt.contour(x1, x2, z, levels=20, alpha=0.5, cmap="viridis")
         plt.plot(*zip(*trajectory), marker='o', color='red')
         plt.xlabel('x1')
