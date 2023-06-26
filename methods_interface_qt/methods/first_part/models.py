@@ -6,7 +6,7 @@ class MinimizationModel(BaseModel):
     b: float = Field(..., description='Введите правую границу интервала b')
     epsilon: float = Field(..., description='Введите точность поиска epsilon')
     f_num: int = Field(..., description='Введите номер функции (1 или 2)')
-    n: int = Field(..., description='Введите количество шагов n')
+    n: int = Field(..., description='Введите количество шагов N')
 
 
 class NewtonModel(BaseModel):

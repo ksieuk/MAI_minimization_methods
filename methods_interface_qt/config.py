@@ -29,17 +29,17 @@ from methods.second_part import (
 )
 
 METHODS = {
-    'Минимизация: Равномерный поиск': (MinimizationModel, min.start_first),
-    'Метод половинного деления': (MinimizationModel, min.start_second),
-    'Метод золотого сечения': (MinimizationModel, min.start_third),
+    'Поиск интервала унимодальности c постоянным шагом': (UnimodalityModel, unimod_steps.start_first),
+    'Поиск интервала унимодальности c пропорциональным шагом': (UnimodalityModel, unimod_steps.start_second),
+    'Поиск интервала унимодальности c шагом Свенна': (UnimodalityModel, unimod_steps.start_third),
+
+    'Равномерный поиск': (MinimizationModel, min.start_first),
+    'Метод половинного деления (введите любое количество шагов N)': (MinimizationModel, min.start_second),
+    'Метод золотого сечения (введите любое количество шагов N)': (MinimizationModel, min.start_third),
 
     'Метод Ньютона-Рафсона': (SingleNewtonModel, newton_min.start_first),
-    'Метод Больцано': (SingleNewtonModel, newton_min.start_second),
-    'Метод секущих': (SingleNewtonModel, newton_min.start_third),
-
-    'Интервал унимодальности c постоянным шагом': (UnimodalityModel, unimod_steps.start_first),
-    'Интервал унимодальности c пропорциональным шагом': (UnimodalityModel, unimod_steps.start_second),
-    'Интервал унимодальности c шагом Свенна': (UnimodalityModel, unimod_steps.start_third),
+    'Метод Больцано (введите любое x0)': (SingleNewtonModel, newton_min.start_second),
+    'Метод секущих (введите любое x0)': (SingleNewtonModel, newton_min.start_third),
 
     'Метод Флетчера-Пауэлла': (FletcherPowellModel, fletcher_powell.start_algorithm),
     'Метод Флетчера-Ривса': (FletcherReveesModel, fletcher_revees.start_algorithm),

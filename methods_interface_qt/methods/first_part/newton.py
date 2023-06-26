@@ -29,7 +29,7 @@ def newton_raphson(x0, a, b, epsilon, max_iterations, f_num):
         iterations += 1
 
     print(f"Количество итераций {iterations}:", array)
-    return x0
+    return x0, array
 
 
 def boltsano(a, b, epsilon, max_iterations, f_num):
@@ -46,7 +46,7 @@ def boltsano(a, b, epsilon, max_iterations, f_num):
         iterations += 1
 
     print(f"Количество итераций {iterations}:", array)
-    return (a + b) / 2
+    return ((a + b) / 2), array
 
 
 def secant_method(a, b, epsilon, max_iterations, f_num):
@@ -65,7 +65,7 @@ def secant_method(a, b, epsilon, max_iterations, f_num):
     if x1 < a or x1 > b:
         print(f"Текущее приближение вышло за пределы интервала, x0 = {x0}")
         return None
-    return x1
+    return x1, array
 
 
 algorithm_names = {
@@ -84,11 +84,11 @@ algorithm_funcs = {
 def start_algorithm(a, b, f_num, algorithm_type, epsilon, max_iterations, x0=None):
     print(a, b, epsilon, max_iterations, f_num)
     if algorithm_type == '1':
-        minimum = algorithm_funcs[algorithm_type](x0, a, b, epsilon, max_iterations, f_num)
+        minimum, x0_array = algorithm_funcs[algorithm_type](x0, a, b, epsilon, max_iterations, f_num)
     else:
-        minimum = algorithm_funcs[algorithm_type](a, b, epsilon, max_iterations, f_num)
+        minimum, x0_array = algorithm_funcs[algorithm_type](a, b, epsilon, max_iterations, f_num)
 
-    return f"Минимум функции на заданном интервале находится в точке x = {minimum}"
+    return f"Минимум функции на заданном интервале находится в точке x = {minimum} \n\nРезультаты итераций:\n{'; '.join(map(str, x0_array))}"
 
 
 def start_first(x0, a, b, epsilon, f_num, max_iterations):
@@ -118,7 +118,7 @@ def start_input():
     if algorithm_number == '1':
         x0 = float(input("Введите начальное приближение x0: "))
     else:
-        x0 = None
+        x0 = 0.0
 
     a = float(input("Введите начало интервала a: "))
     b = float(input("Введите конец интервала b: "))

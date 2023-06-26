@@ -25,7 +25,7 @@ def uniform_search(a, b, epsilon, f_num, n):
             min_arg = x
         i += 1
 
-    return [min_arg - step, min_arg + step], i
+    return min_arg, i
 
 
 def bisection_search(a, b, epsilon, f_num, n):
@@ -88,11 +88,11 @@ def start_first(a, b, epsilon, f_num, n):
 
 
 def start_second(a, b, epsilon, f_num, n):
-    return start_algorithm(a, b, epsilon, algorithm_type='2', f_num=f_num, n=n)
+    return start_algorithm(a, b, epsilon, algorithm_type='2', f_num=f_num, n=1)
 
 
 def start_third(a, b, epsilon, f_num, n):
-    return start_algorithm(a, b, epsilon, algorithm_type='3', f_num=f_num, n=n)
+    return start_algorithm(a, b, epsilon, algorithm_type='3', f_num=f_num, n=1)
 
 
 def start_input():
@@ -107,7 +107,7 @@ def start_input():
     a = float(input("Введите левую границу интервала a: "))
     b = float(input("Введите правую границу интервала b: "))
     epsilon = float(input("Введите точность поиска epsilon: "))
-    n = int(input("Введите количество шагов n: "))
+    n = int(input("Введите количество шагов N: "))
 
     start_algorithm(a, b, epsilon, algorithm_number, f_num, n)
 

@@ -80,7 +80,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.graphWidget = graph
 
         except ValueError as e:
-            print(e)
             result = str(e)
         self.text_entry.setText(result)
 

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>787</width>
+    <width>800</width>
     <height>735</height>
    </rect>
   </property>
@@ -101,6 +101,9 @@ QScrollBar::ad-page:vertical, QScrollBar::sub-page:vertical, QScrollBar::add-pag
    <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,1,1">
     <item>
      <widget class="QListWidget" name="list_methods">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="font">
        <font>
         <family>Fira Sans</family>

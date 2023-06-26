@@ -12,7 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(787, 735)
+        MainWindow.resize(800, 735)
         MainWindow.setMinimumSize(QtCore.QSize(700, 700))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/icons/calculator.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
@@ -92,6 +92,7 @@ class Ui_MainWindow(object):
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName("verticalLayout")
         self.list_methods = QtWidgets.QListWidget(self.centralwidget)
+        self.list_methods.setEnabled(True)
         font = QtGui.QFont()
         font.setFamily("Fira Sans")
         font.setPointSize(-1)
