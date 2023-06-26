@@ -81,6 +81,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         except ValueError as e:
             result = str(e)
+        except RecursionError:
+            result = 'Ошибка: Бесконечный цикл. Проверьте значение шага.'
         self.text_entry.setText(result)
 
     def delete_graph(self):
