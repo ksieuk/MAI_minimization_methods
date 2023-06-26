@@ -105,6 +105,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         except ValidationError as e:
             result = self.__get_error_message(e.errors())
         except ValueError as e:
+            raise e
             result = str(e)
         except RecursionError:
             result = 'Ошибка: Бесконечный цикл. Проверьте значение шага.'

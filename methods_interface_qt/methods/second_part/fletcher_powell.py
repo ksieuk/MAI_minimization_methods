@@ -5,55 +5,48 @@ from PyQt6 import QtCore
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
 
+from methods.second_part.funcs import f2, f2_gradient
+
+
 from methods.second_part.models import FletcherPowellModel
 
 matplotlib.use('QtAgg')
 
 
-def f2(x):
-    return 0.5 * (x[1] - x[0] ** 2) ** 2 + (1 - x[0]) ** 2
-
-
-def gradient_f2(x):
-    df_dx1 = 2 * x[0] - 2 * x[0] * (x[1] - x[0] ** 2) - 2
-    df_dx2 = x[1] - x[0] ** 2
-    return np.array([df_dx1, df_dx2])
-
-
-def davidon_fletcher_powell(x0, epsilon=1e-5, max_iterations=100):
-    x = np.array(x0)
+def davidon_fletcher_powell(x0, epsilon=1e-5, max_iterations=100, func=f2, gradient=f2_gradient):
+    x1, x2 = np.array(x0)
     B = np.eye(2)  # Инициализируем начальную матрицу Hessian
     iteration = 0
 
-    x_history = [x]  # Список для сохранения истории точек
-    f_history = [f2(x)]  # Список для сохранения истории значений функции
+    x_history = [x1, x2]  # Список для сохранения истории точек
+    f_history = [func(x1, x2)]  # Список для сохранения истории значений функции
 
-    while np.linalg.norm(gradient_f2(x)) > epsilon and iteration < max_iterations:
-        p = -np.dot(B, gradient_f2(x))  # Вычисляем направление спуска
+    while np.linalg.norm(gradient(x1, x2)) > epsilon and iteration < max_iterations:
+        p = -np.dot(B, gradient(x1, x2))  # Вычисляем направление спуска
 
-        alpha = line_search(x, p)  # Выполняем поиск шага по алгоритму "линийный поиск"
+        alpha = line_search(x1, x2, p)  # Выполняем поиск шага по алгоритму "линийный поиск"
 
-        x_next = x + alpha * p  # Вычисляем следующую точку
-        s = x_next - x  # Вычисляем разность между текущей и следующей точками
-        y = gradient_f2(x_next) - gradient_f2(x)  # Вычисляем разность градиентов в двух точках
+        x1_next, x2_next = x1 + alpha * p, x2 + alpha * p  # Вычисляем следующую точку
+        s = x1_next - x1  # Вычисляем разность между текущей и следующей точками
+        y = gradient(x1_next, x2_next) - gradient(x1, x2)  # Вычисляем разность градиентов в двух точках
 
         # Обновляем матрицу B по формуле Дэвидона-Флетчера-Пауэлла
         B += np.outer(s, s) / np.dot(s, y) - np.dot(B, np.outer(y, y)).dot(B) / np.dot(y, np.dot(B, y))
 
-        x = x_next
+        x1, x2 = x1_next, x2_next
         iteration += 1
 
-        x_history.append(x)
-        f_history.append(f2(x))
+        x_history.append((x1_next, x2_next))
+        f_history.append(func(x1_next, x2_next))
 
     return x_history, f_history
 
 
-def line_search(x, p):
+def line_search(x1, x2, p, func=f2, gradient=f2_gradient):
     alpha = 1.0
     rho = 0.5
     c = 0.5
-    while f2(x + alpha * p) > f2(x) + c * alpha * np.dot(gradient_f2(x), p):
+    while func(x1 + alpha * p, x2 + alpha * p) > (func(x1, x2) + c * alpha * np.dot(gradient(x1, x2), p)):
         alpha *= rho
     return alpha
 
