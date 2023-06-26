@@ -14,7 +14,7 @@ def const_step(x, k, xp, delta, f_num):
         a = xp
         b = xk
         print(f'[{a:.3f}; {b:.3f}] {(b - a):.3f}, k = {k}')
-        return a, b
+        return a, b, k
     return const_step(x=xk, k=k + 1, xp=x, delta=delta, f_num=f_num)
 
 
@@ -24,7 +24,7 @@ def prop_step(x, k, xp, delta, f_num):
         a = xp
         b = xk
         print(f'[{a:.3f}; {b:.3f}] {(b - a):.3f}, k = {k}')
-        return a, b
+        return a, b, k
     return prop_step(x=xk, k=k + 1, xp=x, delta=delta, f_num=f_num)
 
 
@@ -34,7 +34,7 @@ def svenn_step(x, k, xp, delta, f_num):
         a = xp
         b = xk
         print(f'[{a:.3f}; {b:.3f}] {(b - a):.3f}, k = {k}')
-        return a, b
+        return a, b, k
     return svenn_step(x=xk, k=k + 1, xp=x, delta=delta, f_num=f_num)
 
 
@@ -42,15 +42,16 @@ def unimod(x, delta, a, b, f_num, algorithm_type):
     fa = f(x, f_num)
     fb = f(x + delta, f_num)
     fc = f(x - delta, f_num)
+    k = 0
 
     if fc >= fa <= fb:
-        return (a + b) / 2
+        return a, b, k
 
     if fc <= fa <= fb:
         delta = -delta
-    a, b = step(x=x, k=0, xp=x, delta=delta, algorithm_type=algorithm_type, f_num=f_num)
+    a, b, k = step(x=x, k=0, xp=x, delta=delta, algorithm_type=algorithm_type, f_num=f_num)
 
-    return (a + b) / 2
+    return a, b, k
 
 
 def step(x, k, xp, delta, f_num, algorithm_type):
@@ -70,13 +71,13 @@ algorithm_names = {
 
 
 def start_algorithm(x0, a, b, delta, ran, f_num, algorithm_type):
-    result = 0
+    hist = []
     for i in range(ran):
-        result = unimod(x0, delta, a, b, f_num, algorithm_type)
-        delta += 0.001
         print(i + 1, end=': ')
-    return f"Интервал унимодальности находится в точке {result:.6f}, " \
-           f"значение функции в этой точке {f(result, f_num):.6f}"
+        a, b, k = unimod(x0, delta, a, b, f_num, algorithm_type)
+        delta += 0.001
+        hist.append(f"{i + 1}\t{b}\t{b - a}\t{k}")
+    return '\n'.join(hist)
 
 
 def start_first(x0, a, b, delta, f_num, ran):
