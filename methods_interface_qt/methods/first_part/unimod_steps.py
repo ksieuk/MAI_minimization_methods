@@ -77,6 +77,7 @@ def start_algorithm(x0, a, b, delta, ran, f_num, algorithm_type):
         a, b, k = unimod(x0, delta, a, b, f_num, algorithm_type)
         delta += 0.001
         hist.append(f"{i + 1}\t{b}\t{b - a}\t{k}")
+    hist.append(f"Интервал унимодальности [a, b] = [{a}, {b}]")
     return '\n'.join(hist)
 
 
