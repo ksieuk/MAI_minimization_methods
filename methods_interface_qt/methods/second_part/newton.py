@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib
-import matplotlib.pyplot as plt
 
 from PyQt6 import QtCore
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
