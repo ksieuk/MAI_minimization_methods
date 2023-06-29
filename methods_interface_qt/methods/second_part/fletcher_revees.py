@@ -5,6 +5,9 @@ from PyQt6 import QtCore
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
 
+from methods.second_part.models import FletcherReveesModel
+
+
 
 def f(x):
     return 0.5 * (x[1] - x[0] ** 2) ** 2 + (1 - x[0]) ** 2
@@ -61,7 +64,7 @@ class MplCanvas(FigureCanvasQTAgg):
         super(MplCanvas, self).__init__(plt_)
 
 
-def start_algorithm(x1, x2):
+def start_algorithm(x1: float, x2: float):
     # Начальные точки
     x0 = np.array([x1, x2])
 
@@ -73,6 +76,13 @@ def start_algorithm(x1, x2):
 
     # Выводим результат
     return f"Найденное решение: {solution}", graph
+
+
+def start_from_model(model: FletcherReveesModel):
+    return start_algorithm(
+        model.x1,
+        model.x2
+    )
 
 
 def start_input():

@@ -1,7 +1,15 @@
 from methods.first_part.models import (
-    MinimizationModel,
-    NewtonModel as SingleNewtonModel,
-    UnimodalityModel,
+    UniformCostSearchModel,
+    HalfDivisionModel,
+    GoldenSectionSearchModel,
+
+    NewtonRaphsonModel,
+    BoltsanoModel,
+    SecantMethodModel,
+
+    ConstStepModel,
+    PropStepModel,
+    SvennStepModel,
 )
 
 from methods.second_part.models import (
@@ -29,22 +37,25 @@ from methods.second_part import (
 )
 
 METHODS = {
-    'Поиск интервала унимодальности c постоянным шагом': (UnimodalityModel, unimod_steps.start_first),
-    'Поиск интервала унимодальности c пропорциональным шагом': (UnimodalityModel, unimod_steps.start_second),
-    'Поиск интервала унимодальности c шагом Свенна': (UnimodalityModel, unimod_steps.start_third),
+    'Поиск интервала унимодальности c постоянным шагом': (ConstStepModel, unimod_steps.start_first),
+    'Поиск интервала унимодальности c пропорциональным шагом': (PropStepModel, unimod_steps.start_second),
+    'Поиск интервала унимодальности c шагом Свенна': (SvennStepModel, unimod_steps.start_third),
 
-    'Равномерный поиск': (MinimizationModel, min.start_first),
-    'Метод половинного деления (введите любое количество шагов N)': (MinimizationModel, min.start_second),
-    'Метод золотого сечения (введите любое количество шагов N)': (MinimizationModel, min.start_third),
+    'Равномерный поиск': (UniformCostSearchModel, min.start_first),
+    'Метод половинного деления': (HalfDivisionModel, min.start_second),
+    'Метод золотого сечения': (GoldenSectionSearchModel, min.start_third),
 
-    'Метод Ньютона-Рафсона': (SingleNewtonModel, newton_min.start_first),
-    'Метод Больцано (введите любое x0)': (SingleNewtonModel, newton_min.start_second),
-    'Метод секущих (введите любое x0)': (SingleNewtonModel, newton_min.start_third),
+    'Метод Ньютона-Рафсона': (NewtonRaphsonModel, newton_min.start_first),
+    'Метод Больцано (введите любое x0)': (BoltsanoModel, newton_min.start_second),
+    'Метод секущих (введите любое x0)': (SecantMethodModel, newton_min.start_third),
 
-    'Метод Флетчера-Пауэлла': (FletcherPowellModel, fletcher_powell.start_algorithm),
-    'Метод Флетчера-Ривса': (FletcherReveesModel, fletcher_revees.start_algorithm),
-    'Метод Коши': (KoshiModel, koshi.start_algorithm),
-    'Метод Левенберга-Марквардта': (LevenbergMarquardtModel, levenberg_marquardt.start_algorithm),
-    'Метод Ньютона': (NewtonModel, newton.start_algorithm),
-    'Модифицированный метод Ньютона': (NewtonModifiedModel, newton_modified.start_algorithm),
+    'Метод Флетчера-Пауэлла': (FletcherPowellModel, fletcher_powell.start_from_model),
+    'Метод Флетчера-Ривса': (FletcherReveesModel, fletcher_revees.start_from_model),
+    'Метод Коши': (KoshiModel, koshi.start_from_model),
+    'Метод Левенберга-Марквардта': (LevenbergMarquardtModel, levenberg_marquardt.start_from_model),
+    'Метод Ньютона': (NewtonModel, newton.start_from_model),
+    'Модифицированный метод Ньютона': (NewtonModifiedModel, newton_modified.start_from_model),
 }
+
+
+FIELD_DEFAULT_TYPE = str | int | float | None

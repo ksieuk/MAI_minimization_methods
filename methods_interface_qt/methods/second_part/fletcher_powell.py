@@ -5,6 +5,8 @@ from PyQt6 import QtCore
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
 
+from methods.second_part.models import FletcherPowellModel
+
 matplotlib.use('QtAgg')
 
 
@@ -77,7 +79,7 @@ class MplCanvas(FigureCanvasQTAgg):
         super(MplCanvas, self).__init__(plt_)
 
 
-def start_algorithm(x1, x2):
+def start_algorithm(x1: float, x2: float):
     # Запуск метода Дэвидона-Флетчера-Пауэлла
     x_values = [x1, x2]
     x_history, f_history = davidon_fletcher_powell(x_values)
@@ -88,6 +90,13 @@ def start_algorithm(x1, x2):
     # Вывод результатов
     return f"Точки:\n{'; '.join(map(str, x_history))}\nЗначения функции:\n{'; '.join(map(str, f_history))}",\
         graph
+
+
+def start_from_model(model: FletcherPowellModel):
+    return start_algorithm(
+        model.x1,
+        model.x2
+    )
 
 
 def start_input():

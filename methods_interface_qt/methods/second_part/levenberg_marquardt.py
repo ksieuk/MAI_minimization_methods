@@ -7,6 +7,8 @@ from PyQt6 import QtCore
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
 
+from methods.second_part.models import LevenbergMarquardtModel
+
 matplotlib.use('QtAgg')
 
 
@@ -69,7 +71,6 @@ class MplCanvas(FigureCanvasQTAgg):
         super(MplCanvas, self).__init__(plt_)
 
 
-
 def start_algorithm(x1, x2):
     x0 = np.array([x1, x2])
 
@@ -80,6 +81,13 @@ def start_algorithm(x1, x2):
     graph = MplCanvas(width=5, height=4, dpi=100)
 
     return f"Найденные точки:\nx1 = {result[0]}\nx2 = {result[1]}", graph
+
+
+def start_from_model(model: LevenbergMarquardtModel):
+    return start_algorithm(
+        model.x1,
+        model.x2
+    )
 
 
 def start_input():

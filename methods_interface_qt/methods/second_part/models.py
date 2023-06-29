@@ -1,34 +1,35 @@
-from pydantic import BaseModel, Field
+from base_models import (
+    CoordinatesModel,
+    MaxIterationModel,
+    EpsilonModel,
+    FirstArrival,
+)
 
 
-class FletcherPowellModel(BaseModel):
-    x1: float = Field(..., description='Введите первую точку x1')
-    x2: float = Field(..., description='Введите вторую точку x2')
+class FletcherPowellModel(CoordinatesModel):
+    """Метод Флетчера-Пауэлла"""
 
 
-class FletcherReveesModel(BaseModel):
-    x1: float = Field(..., description='Введите первую точку x1')
-    x2: float = Field(..., description='Введите вторую точку x2')
+class FletcherReveesModel(CoordinatesModel):
+    """Метод Флетчера-Ривса"""
 
 
-class KoshiModel(BaseModel):
-    t: float = Field(..., description='Введите значение t (первое приближение)')
-    x1: float = Field(..., description='Введите первую точку x1')
-    x2: float = Field(..., description='Введите вторую точку x2')
-    max_iterations: int = Field(..., description='Введите максимальное количество итераций')
-    epsilon: float = Field(..., description='Введите значение эпсилон')
+class KoshiModel(
+    MaxIterationModel,
+    EpsilonModel,
+    CoordinatesModel,
+    FirstArrival
+):
+    """Метод Коши"""
 
 
-class LevenbergMarquardtModel(BaseModel):
-    x1: float = Field(..., description='Введите первую точку x1')
-    x2: float = Field(..., description='Введите вторую точку x2')
+class LevenbergMarquardtModel(CoordinatesModel):
+    """Метод Левенберга-Марквардта"""
 
 
-class NewtonModel(BaseModel):
-    x1: float = Field(..., description='Введите первую точку x1')
-    x2: float = Field(..., description='Введите вторую точку x2')
+class NewtonModel(CoordinatesModel):
+    """Метод Ньютона"""
 
 
-class NewtonModifiedModel(BaseModel):
-    x1: float = Field(..., description='Введите первую точку x1')
-    x2: float = Field(..., description='Введите вторую точку x2')
+class NewtonModifiedModel(CoordinatesModel):
+    """Модифицированный метод Ньютона"""

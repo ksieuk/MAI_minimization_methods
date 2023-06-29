@@ -1,5 +1,11 @@
 import numpy as np
 
+from methods.first_part.models import (
+    NewtonRaphsonModel,
+    BoltsanoModel,
+    SecantMethodModel,
+)
+
 
 def f(x, f_num):
     if f_num == '1':
@@ -55,7 +61,7 @@ def secant_method(a, b, epsilon, max_iterations, f_num):
     for _ in range(max_iterations):
         if abs(x1 - x0) < epsilon:
             print(f"Количество итераций {_}:", array)
-            return x1
+            return x1, array
         try:
             x0, x1 = x1, x1 - derivative(x1, f_num, h=1e-7) * (
                     (x1 - x0) / (derivative(x1, f_num, h=1e-7) - derivative(x0, f_num, h=1e-7)))
@@ -63,8 +69,7 @@ def secant_method(a, b, epsilon, max_iterations, f_num):
         except ZeroDivisionError:
             break
     if x1 < a or x1 > b:
-        print(f"Текущее приближение вышло за пределы интервала, x0 = {x0}")
-        return None
+        raise ValueError(f"Текущее приближение вышло за пределы интервала, x0 = {x0}")
     return x1, array
 
 
@@ -82,25 +87,46 @@ algorithm_funcs = {
 
 
 def start_algorithm(a, b, f_num, algorithm_type, epsilon, max_iterations, x0=None):
-    print(a, b, epsilon, max_iterations, f_num)
-    if algorithm_type == '1':
-        minimum, x0_array = algorithm_funcs[algorithm_type](x0, a, b, epsilon, max_iterations, f_num)
-    else:
+    if x0 is None:
         minimum, x0_array = algorithm_funcs[algorithm_type](a, b, epsilon, max_iterations, f_num)
+    else:
+        minimum, x0_array = algorithm_funcs[algorithm_type](x0, a, b, epsilon, max_iterations, f_num)
 
     return f"Минимум функции на заданном интервале находится в точке x = {minimum} \n\nРезультаты итераций:\n{'; '.join(map(str, x0_array))}"
 
 
-def start_first(x0, a, b, epsilon, f_num, max_iterations):
-    return start_algorithm(a, b, f_num, algorithm_type='1', epsilon=epsilon, max_iterations=max_iterations, x0=x0)
+def start_first(model: NewtonRaphsonModel):
+    return start_algorithm(
+        model.a,
+        model.b,
+        model.f_num,
+        algorithm_type='1',
+        epsilon=model.epsilon,
+        max_iterations=model.n,
+        x0=model.x0
+    )
 
 
-def start_second(x0, a, b, epsilon, f_num, max_iterations):
-    return start_algorithm(a, b, f_num, algorithm_type='2', epsilon=epsilon, max_iterations=max_iterations, x0=x0)
+def start_second(model: BoltsanoModel):
+    return start_algorithm(
+        model.a,
+        model.b,
+        model.f_num,
+        algorithm_type='2',
+        epsilon=model.epsilon,
+        max_iterations=model.n,
+    )
 
 
-def start_third(x0, a, b, epsilon, f_num, max_iterations):
-    return start_algorithm(a, b, f_num, algorithm_type='3', epsilon=epsilon, max_iterations=max_iterations, x0=x0)
+def start_third(model: SecantMethodModel):
+    return start_algorithm(
+        model.a,
+        model.b,
+        model.f_num,
+        algorithm_type='3',
+        epsilon=model.epsilon,
+        max_iterations=model.n,
+    )
 
 
 def start_input():

@@ -1,6 +1,12 @@
 import math
 import numpy as np
 
+from methods.first_part.models import (
+    UniformCostSearchModel,
+    HalfDivisionModel,
+    GoldenSectionSearchModel,
+)
+
 
 def f(x, f_num):
     if f_num == 1:
@@ -28,7 +34,7 @@ def uniform_search(a, b, epsilon, f_num, n):
     return min_arg, i
 
 
-def bisection_search(a, b, epsilon, f_num, n):
+def bisection_search(a, b, epsilon, f_num):
     i = 0
     while abs(b - a) > epsilon:
         x = (a + b) / 2
@@ -45,7 +51,7 @@ def derivative(f_num, x, h=1e-7):
     return (f(x + h, f_num) - f(x - h, f_num)) / (2 * h)
 
 
-def golden_section_search(a, b, epsilon, f_num, n):
+def golden_section_search(a, b, epsilon, f_num):
     i = 0
     golden_ratio = (1 + math.sqrt(5)) / 2
     c = b - (b - a) / golden_ratio
@@ -76,23 +82,43 @@ algorithm_funcs = {
 }
 
 
-def start_algorithm(a, b, epsilon, algorithm_type, f_num, n):
-    minimum, iteration_number = algorithm_funcs[algorithm_type](a, b, epsilon, f_num, n)
-
-    return f"Минимум функции на заданном интервале находится в точке x = {minimum}," \
+def start_algorithm(a, b, epsilon, algorithm_type, f_num, n=None):
+    print(f'{n=}')
+    if n is not None:
+        minimum, iteration_number = algorithm_funcs[algorithm_type](a, b, epsilon, f_num, n)
+    else:
+        minimum, iteration_number = algorithm_funcs[algorithm_type](a, b, epsilon, f_num)
+    return f"Минимум функции на заданном интервале находится в точке\nx = {minimum}," \
            f" количество итераций = {iteration_number}"
 
 
-def start_first(a, b, epsilon, f_num, n):
-    return start_algorithm(a, b, epsilon, algorithm_type='1', f_num=f_num, n=n)
+def start_first(model: UniformCostSearchModel) -> str:
+    print(model.n)
+    return start_algorithm(
+        model.a, model.b,
+        model.epsilon,
+        algorithm_type='1',
+        f_num=model.f_num,
+        n=model.n
+    )
 
 
-def start_second(a, b, epsilon, f_num, n):
-    return start_algorithm(a, b, epsilon, algorithm_type='2', f_num=f_num, n=1)
+def start_second(model: HalfDivisionModel) -> str:
+    return start_algorithm(
+        model.a, model.b,
+        model.epsilon,
+        algorithm_type='2',
+        f_num=model.f_num,
+    )
 
 
-def start_third(a, b, epsilon, f_num, n):
-    return start_algorithm(a, b, epsilon, algorithm_type='3', f_num=f_num, n=1)
+def start_third(model: GoldenSectionSearchModel):
+    return start_algorithm(
+        model.a, model.b,
+        model.epsilon,
+        algorithm_type='3',
+        f_num=model.f_num,
+    )
 
 
 def start_input():
