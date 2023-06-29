@@ -1,5 +1,11 @@
 import numpy as np
 
+from methods.first_part.models import (
+    ConstStepModel,
+    PropStepModel,
+    SvennStepModel,
+)
+
 
 def f(x, f_num):
     if f_num == '1':
@@ -81,17 +87,40 @@ def start_algorithm(x0, a, b, delta, ran, f_num, algorithm_type):
     return '\n'.join(hist)
 
 
-def start_first(x0, a, b, delta, f_num, ran):
-    return start_algorithm(x0, a, b, delta, ran, f_num, algorithm_type='1')
+def start_first(model: ConstStepModel):
+    return start_algorithm(
+        model.x0,
+        model.a,
+        model.b,
+        model.delta,
+        model.n,
+        model.f_num,
+        algorithm_type='1'
+    )
 
 
-def start_second(x0, a, b, delta, f_num, ran):
-    return start_algorithm(x0, a, b, delta, ran, f_num, algorithm_type='2')
+def start_second(model: PropStepModel):
+    return start_algorithm(
+        model.x0,
+        model.a,
+        model.b,
+        model.delta,
+        model.n,
+        model.f_num,
+        algorithm_type='2'
+    )
 
 
-def start_third(x0, a, b, delta, f_num, ran):
-    return start_algorithm(x0, a, b, delta, ran, f_num, algorithm_type='3')
-
+def start_third(model: SvennStepModel):
+    return start_algorithm(
+        model.x0,
+        model.a,
+        model.b,
+        model.delta,
+        model.n,
+        model.f_num,
+        algorithm_type='3'
+    )
 
 def start_input():
     for key, value in algorithm_names.items():

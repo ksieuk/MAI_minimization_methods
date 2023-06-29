@@ -1,3 +1,6 @@
+from methods.second_part.models import KoshiModel
+
+
 def f_x(x1, x2):  # функция от х
     func = 0.5 * (x2 - x1 ** 2) ** 2 + (1 - x1) ** 2
     return func
@@ -67,6 +70,17 @@ def start_algorithm(max_iterations, epsilon, t, x1, x2):
 
     return f"k = {k}, t = {t}, x1 = {x1}, x2 = {x2}, f(x) = {f_x(x1, x2)}, t = {t}," \
            f" grad = 1:{f_xx1(x1, x2)} 2:{f_xx2(x1, x2)}"
+
+
+def start_from_model(model: KoshiModel):
+    return start_algorithm(
+        model.n,
+        model.epsilon,
+        model.x0,
+        model.x1,
+        model.x2
+    )
+
 
 def start_input():
     t = float(input('Введите значение t (первое приближение): '))

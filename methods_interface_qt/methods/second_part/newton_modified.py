@@ -6,6 +6,9 @@ from PyQt6 import QtCore
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
 
+from methods.second_part.models import NewtonModifiedModel
+
+
 matplotlib.use('QtAgg')
 
 
@@ -82,6 +85,12 @@ def start_algorithm(x1, x2):
 
     return f"Найденная точка: {solution}\nТраектория поиска: {trajectory}", graph
 
+
+def start_from_model(model: NewtonModifiedModel):
+    return start_algorithm(
+        model.x1,
+        model.x2
+    )
 
 
 def start_input():
