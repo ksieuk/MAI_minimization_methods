@@ -1,27 +1,15 @@
 import numpy as np
 import matplotlib
-import matplotlib.pyplot as plt
 
 from PyQt6 import QtCore
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from matplotlib.figure import Figure
 
 from methods.second_part.models import NewtonModifiedModel
+from methods.second_part.funcs import FUNCS
 
 
 matplotlib.use('QtAgg')
-
-
-def f2(x):
-    x1, x2 = x
-    return 0.5 * (x2 - x1 ** 2) ** 2 + (1 - x1) ** 2
-
-
-def gradient_f2(x):
-    x1, x2 = x
-    grad_x1 = -2 * (1 - x1) - 2 * (x2 - x1 ** 2) * 2 * x1
-    grad_x2 = 2 * (x2 - x1 ** 2)
-    return np.array([grad_x1, grad_x2])
 
 
 def hessian_f2(x):
@@ -33,15 +21,15 @@ def hessian_f2(x):
     return np.array([[hessian_x11, hessian_x12], [hessian_x21, hessian_x22]])
 
 
-def modified_newton_method(f, grad_f, hessian_f, x0, max_iter=100, epsilon=1e-6):
+def modified_newton_method(x0, epsilon, max_iter, gradient, hessian):
     x = np.array(x0, dtype=float)
     trajectory = [x]
 
     for _ in range(max_iter):
-        gradient = grad_f(x)
-        hessian = hessian_f(x)
+        gradient_value = gradient(*x)
+        hessian_value = hessian(*x)
 
-        delta = np.linalg.solve(hessian, -gradient)
+        delta = np.linalg.solve(hessian_value, -gradient_value)
         x += delta
         trajectory.append(x)
 
@@ -53,35 +41,38 @@ def modified_newton_method(f, grad_f, hessian_f, x0, max_iter=100, epsilon=1e-6)
 
 class MplCanvas(FigureCanvasQTAgg):
 
-    def __init__(self, width=5, height=4, dpi=100):
+    def __init__(self, func, f_num, trajectory, width=5, height=4, dpi=100):
         plt_ = Figure(figsize=(width, height), dpi=dpi)
 
-        self.axes = plt_.add_subplot(111, projection='3d')
-
-        x1_values = np.linspace(-2, 2, 100)
-        x2_values = np.linspace(-1, 3, 100)
-        x1, x2 = np.meshgrid(x1_values, x2_values)
-        z = f2([x1, x2])
-
-        self.axes.plot_surface(x1, x2, z, cmap='viridis')
-        self.axes.set_xlabel('X1')
-        self.axes.set_ylabel('X2')
-        self.axes.set_zlabel('f2(X1, X2)')
-        self.axes.set_title('График функции f2(X1, X2)')
+        self.axes = plt_.add_subplot(111)
+        x1_vals = np.linspace(-3, 3, 100)
+        x2_vals = np.linspace(-3, 3, 100)
+        x1, x2 = np.meshgrid(x1_vals, x2_vals)
+        z = func(x1, x2)
+        self.axes.contour(x1, x2, z, levels=20, alpha=0.5, cmap="viridis")
+        self.axes.plot(*zip(*trajectory), marker='o', color='red')
+        self.axes.set_xlabel('x1')
+        self.axes.set_ylabel('x2')
+        self.axes.set_title(f'Метод Ньютона для функции f{f_num}(x1, x2)')
         super(MplCanvas, self).__init__(plt_)
 
 
-def start_algorithm(x1, x2):
-    x0 = [x1, x2]
-    # Применяем модифицированный метод Ньютона
-    solution, trajectory = modified_newton_method(f2, gradient_f2, hessian_f2, x0)
+def start_algorithm(x1: float, x2: float, epsilon, max_iterations, f_num):
+    start_point = [x1, x2]
+    funcs = FUNCS[f_num]
+    func, gradient, hessian = funcs['func'], funcs['gradient'], funcs['hessian']
 
-    # Выводим результаты
+    # Применяем метод Ньютона для каждой начальной точки
+
+    solution, trajectory = modified_newton_method(
+        start_point, epsilon, max_iterations, gradient, hessian
+    )
+
     print("Найденная точка: ", solution)
     print("Траектория поиска: ", trajectory)
 
-    # Построение графика функции
-    graph = MplCanvas(width=5, height=4, dpi=100)
+    # Рисуем график функции
+    graph = MplCanvas(func, f_num, trajectory, width=5, height=4, dpi=100)
 
     return f"Найденная точка: {solution}\nТраектория поиска: {trajectory}", graph
 
@@ -89,22 +80,31 @@ def start_algorithm(x1, x2):
 def start_from_model(model: NewtonModifiedModel):
     return start_algorithm(
         model.x1,
-        model.x2
+        model.x2,
+        model.epsilon,
+        model.n,
+        model.f_num,
     )
 
 
 def start_input():
-    x1 = float(input('Введите первую точку x1: '))
-    x2 = float(input('Введите вторую точку x2: '))
+    x1 = float(input('Введите первую координату точки x1: '))
+    x2 = float(input('Введите вторую координату точки x2: '))
+    epsilon = float(input('Введите погрешность epsilon: '))
+    max_iterations = int(input('Введите максимальное количество итераций n: '))
+    f_num = int(input('Введите номер функции (1, 2 или 3)'))
 
-    start_algorithm(x1, x2)
+    print(start_algorithm(x1, x2, epsilon, max_iterations, f_num))
 
 
 def main():
     # Начальные точки
     x1, x2 = 0, 0
+    epsilon = 0.001
+    max_iterations = 100
+    f_num = 2
 
-    start_algorithm(x1, x2)
+    print(start_algorithm(x1, x2, epsilon, max_iterations, f_num))
 
 
 if __name__ == '__main__':
