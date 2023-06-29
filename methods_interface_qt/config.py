@@ -46,8 +46,8 @@ METHODS = {
     'Метод золотого сечения': (GoldenSectionSearchModel, min.start_third),
 
     'Метод Ньютона-Рафсона': (NewtonRaphsonModel, newton_min.start_first),
-    'Метод Больцано (введите любое x0)': (BoltsanoModel, newton_min.start_second),
-    'Метод секущих (введите любое x0)': (SecantMethodModel, newton_min.start_third),
+    'Метод Больцано': (BoltsanoModel, newton_min.start_second),
+    'Метод секущих': (SecantMethodModel, newton_min.start_third),
 
     'Метод Флетчера-Пауэлла': (FletcherPowellModel, fletcher_powell.start_from_model),
     'Метод Флетчера-Ривса': (FletcherReveesModel, fletcher_revees.start_from_model),

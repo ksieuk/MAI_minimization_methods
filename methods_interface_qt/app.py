@@ -90,7 +90,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             message = error.get('msg')
             message = f"Ошибка валидации типа {message.split()[-1]}" \
                 if message.startswith('value is not') else message
-            error_messages.append(f"{message}. Поля: {', '.join(error.get('loc'))}")
+            error_messages.append(f"{message}. Поле: {', '.join(error.get('loc'))}")
         return "\n".join(error_messages)
 
     def on_calculate(self):
@@ -98,6 +98,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             result = self.method_selected(self.get_input_text())
             if isinstance(result, tuple):
                 result, graph = result
+                size_policy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+                graph.setSizePolicy(size_policy)
                 self.layout_output.addWidget(graph)
                 self.delete_graph()
                 self.graphWidget = graph

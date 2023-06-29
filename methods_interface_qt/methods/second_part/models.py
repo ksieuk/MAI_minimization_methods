@@ -1,3 +1,5 @@
+from pydantic import BaseModel, Field, validator
+
 from base_models import (
     CoordinatesModel,
     MaxIterationModel,
@@ -6,30 +8,45 @@ from base_models import (
 )
 
 
-class FletcherPowellModel(CoordinatesModel):
-    """Метод Флетчера-Пауэлла"""
+class SecondPartFuncNumModel(BaseModel):
+    f_num: int = Field(1, description='Введите номер функции (1 или 2)')
+
+    @validator('f_num')
+    def f_num_must_contains(cls, value):
+        if value not in (1, 2, 3):
+            raise ValueError('Функции с таким номером нет.'
+                             'Ожидаемое значение "1", "2" или "3"')
+        return value
 
 
-class FletcherReveesModel(CoordinatesModel):
-    """Метод Флетчера-Ривса"""
-
-
-class KoshiModel(
+class BaseSecondPartModel(
     MaxIterationModel,
     EpsilonModel,
     CoordinatesModel,
-    FirstArrival
+    SecondPartFuncNumModel
 ):
+    """Базовый класс для многомерных методов"""
+
+
+class FletcherPowellModel(BaseSecondPartModel):
+    """Метод Флетчера-Пауэлла"""
+
+
+class FletcherReveesModel(BaseSecondPartModel):
+    """Метод Флетчера-Ривса"""
+
+
+class KoshiModel(BaseSecondPartModel, FirstArrival):
     """Метод Коши"""
 
 
-class LevenbergMarquardtModel(CoordinatesModel):
+class LevenbergMarquardtModel(BaseSecondPartModel):
     """Метод Левенберга-Марквардта"""
 
 
-class NewtonModel(CoordinatesModel):
+class NewtonModel(BaseSecondPartModel):
     """Метод Ньютона"""
 
 
-class NewtonModifiedModel(CoordinatesModel):
+class NewtonModifiedModel(BaseSecondPartModel):
     """Модифицированный метод Ньютона"""
