@@ -8,10 +8,14 @@ from methods.first_part.models import (
 
 
 def f(x, f_num):
-    if f_num == '1':
-        return (np.sin(x)) ** 11
+    if f_num == 1:
+        res = (np.sin(x)) ** 11
     else:
-        return 2 * (x - 1) ** 2 + 0.01 / (1 - 2 * x ** 2)
+        res = 2 * (x - 1) ** 2 + 0.01 / (1 - 2 * x ** 2)
+
+    if np.isnan(res):
+        raise ValueError(f'Ошибка при вычислении значения функции. Попробуйте изменить границы')
+    return res
 
 
 def const_step(x, k, xp, delta, f_num):

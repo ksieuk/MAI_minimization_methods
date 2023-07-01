@@ -74,7 +74,9 @@ def start_algorithm(x1: float, x2: float, epsilon, max_iterations, f_num):
     # Рисуем график функции
     graph = MplCanvas(func, f_num, trajectory, width=5, height=4, dpi=100)
 
-    return f"Найденная точка: {solution}\nТраектория поиска: {trajectory}", graph
+    solution_result = f"({'; '.join(map(str, solution))})"
+    trajectory_result = '\n'.join((f"{'; '.join(map(str, item))}" for item in trajectory))
+    return f"Найденная точка:\n{solution_result}\n\nТраектория поиска:\n{trajectory_result}", graph
 
 
 def start_from_model(model: NewtonModifiedModel):

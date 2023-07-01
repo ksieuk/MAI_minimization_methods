@@ -8,10 +8,14 @@ from methods.first_part.models import (
 
 
 def f(x, f_num):
-    if f_num == '1':
-        return (np.sin(x)) ** 11
+    if f_num == 1:
+        res = (np.sin(x)) ** 11
     else:
-        return 2 * (x - 1) ** 2 + 0.01 / (1 - 2 * x ** 2)
+        res = 2 * (x - 1) ** 2 + 0.01 / (1 - 2 * x ** 2)
+
+    if np.isnan(res):
+        raise ValueError(f'Ошибка при вычислении значения функции. Попробуйте изменить границы')
+    return res
 
 
 def derivative(x, f_num, h=1e-7):
@@ -29,9 +33,8 @@ def newton_raphson(x0, a, b, epsilon, max_iterations, f_num):
         x0 = x0 - derivative(x0, f_num, h=1e-7) / second_derivative(x0, f_num, h=1e-7)
 
         if x0 < a or x0 > b:
-            print(f"Текущее приближение вышло за пределы интервала, x0 = {x0}")
-            return None
-        array.append(x0)
+            raise ValueError(f"Текущее приближение вышло за пределы интервала, {x0=}")
+        array.append((iterations, x0))
         iterations += 1
 
     print(f"Количество итераций {iterations}:", array)
@@ -48,7 +51,7 @@ def boltsano(a, b, epsilon, max_iterations, f_num):
             b = midpoint
         else:
             a = midpoint
-        array.append(midpoint)
+        array.append((iterations, midpoint))
         iterations += 1
 
     print(f"Количество итераций {iterations}:", array)
@@ -58,14 +61,14 @@ def boltsano(a, b, epsilon, max_iterations, f_num):
 def secant_method(a, b, epsilon, max_iterations, f_num):
     x0, x1 = a, b
     array = []
-    for _ in range(max_iterations):
+    for i in range(max_iterations):
         if abs(x1 - x0) < epsilon:
-            print(f"Количество итераций {_}:", array)
+            print(f"Количество итераций {i}:", array)
             return x1, array
         try:
             x0, x1 = x1, x1 - derivative(x1, f_num, h=1e-7) * (
                     (x1 - x0) / (derivative(x1, f_num, h=1e-7) - derivative(x0, f_num, h=1e-7)))
-            array.append(x1)
+            array.append((i, x1))
         except ZeroDivisionError:
             break
     if x1 < a or x1 > b:
@@ -92,7 +95,8 @@ def start_algorithm(a, b, f_num, algorithm_type, epsilon, max_iterations, x0=Non
     else:
         minimum, x0_array = algorithm_funcs[algorithm_type](x0, a, b, epsilon, max_iterations, f_num)
 
-    return f"Минимум функции на заданном интервале находится в точке x = {minimum} \n\nРезультаты итераций:\n{'; '.join(map(str, x0_array))}"
+    result = '\n'.join(map(str, (f"{iteration[0]}: {iteration[1]}" for iteration in x0_array)))
+    return f"Минимум функции на заданном интервале находится в точке x = {minimum} \n\nРезультаты итераций:\n{result}"
 
 
 def start_first(model: NewtonRaphsonModel):

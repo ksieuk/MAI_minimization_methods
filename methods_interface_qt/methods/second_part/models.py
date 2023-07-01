@@ -9,7 +9,7 @@ from base_models import (
 
 
 class SecondPartFuncNumModel(BaseModel):
-    f_num: int = Field(1, description='Введите номер функции (1 или 2)')
+    f_num: int = Field(1, description='Введите номер функции (1, 2 или 3)')
 
     @validator('f_num')
     def f_num_must_contains(cls, value):
@@ -36,7 +36,7 @@ class FletcherReveesModel(BaseSecondPartModel):
     """Метод Флетчера-Ривса"""
 
 
-class KoshiModel(BaseSecondPartModel, FirstArrival):
+class KoshiModel(BaseSecondPartModel, FirstArrival, SecondPartFuncNumModel):
     """Метод Коши"""
 
 

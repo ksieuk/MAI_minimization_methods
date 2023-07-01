@@ -88,8 +88,13 @@ def start_algorithm(x1: float, x2: float, epsilon, max_iterations, f_num):
     graph = MplCanvas(func, f_num, x_history, width=5, height=4, dpi=100)
 
     # Вывод результатов
-    res_x_history, res_f_history = '\n'.join(map(str, x_history)), '\n'.join(map(str, f_history))
-    return f"Точки:\n{res_x_history}\nЗначения функции:\n{res_f_history}",\
+    result = []
+    for i in range(len(x_history)):
+        point = '; '.join(map(str, x_history[i]))
+        result.append(f"({point}) | {f_history[i]}")
+    result = '\n'.join(result)
+    # res_x_history, res_f_history = '\n'.join(map(str, x_history)), '\n'.join(map(str, f_history))
+    return f"Точка | Значение функции\n{result}",\
         graph
 
 

@@ -50,7 +50,7 @@ class SecantMethodModel(BaseNewtonModel):
     """Метод секущих"""
 
 
-class BaseUnimodalityModel(MaxIterationModel, BaseFirstPartFuncNumModel, LimitsModel, FirstArrival):
+class BaseUnimodalityModel(MaxIterationModel, LimitsModel, FirstArrival, BaseFirstPartFuncNumModel):
     """Базовая модель для поиска интервала унимодальности"""
 
     delta: float = Field(0.001, description='Введите величину параметра шага')

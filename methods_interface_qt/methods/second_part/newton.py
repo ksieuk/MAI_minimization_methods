@@ -66,7 +66,7 @@ def start_algorithm(x1: float, x2: float, epsilon, max_iterations, f_num):
     # Рисуем график функции
     graph = MplCanvas(func, f_num, trajectory, width=5, height=4, dpi=100)
 
-    return f"Начальная точка: {start_point}\nОптимальная точка: {x_optimal}", graph
+    return f"Оптимальная точка: ({'; '.join(map(str, x_optimal))})", graph
 
 
 def start_from_model(model: NewtonModel):

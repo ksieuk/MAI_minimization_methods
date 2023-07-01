@@ -10,9 +10,13 @@ from methods.first_part.models import (
 
 def f(x, f_num):
     if f_num == 1:
-        return (np.sin(x)) ** 11
+        res = (np.sin(x)) ** 11
     else:
-        return 2 * (x - 1) ** 2 + 0.01 / (1 - 2 * x ** 2)
+        res = 2 * (x - 1) ** 2 + 0.01 / (1 - 2 * x ** 2)
+
+    if np.isnan(res):
+        raise ValueError(f'Ошибка при вычислении значения функции. Попробуйте изменить границы')
+    return res
 
 
 def uniform_search(a, b, epsilon, f_num, n):
@@ -83,7 +87,6 @@ algorithm_funcs = {
 
 
 def start_algorithm(a, b, epsilon, algorithm_type, f_num, n=None):
-    print(f'{n=}')
     if n is not None:
         minimum, iteration_number = algorithm_funcs[algorithm_type](a, b, epsilon, f_num, n)
     else:
@@ -93,7 +96,6 @@ def start_algorithm(a, b, epsilon, algorithm_type, f_num, n=None):
 
 
 def start_first(model: UniformCostSearchModel) -> str:
-    print(model.n)
     return start_algorithm(
         model.a, model.b,
         model.epsilon,

@@ -68,7 +68,7 @@ def start_algorithm(x1: float, x2: float, epsilon, max_iterations, f_num):
     graph = MplCanvas(func, f_num, points, width=5, height=4, dpi=100)
 
     # Выводим результат
-    return f"Найденное решение: {solution}", graph
+    return f"Найденное решение:\n{solution}", graph
 
 
 def start_from_model(model: FletcherReveesModel):
